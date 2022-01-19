@@ -5,7 +5,7 @@ This is a 3.3/5V compatible MEMS gas concentration sensor from DFRobot. This sen
 
 ![效果图](../../resources/images/SEN0377.jpg)
 
-## Product Link（https://www.dfrobot.com/product-2417.html）
+## Product Link(https://www.dfrobot.com/product-2417.html)
 
     SKU：SEN0377
 
