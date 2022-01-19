@@ -6,7 +6,7 @@ This is a 3.3/5V compatible MEMS gas concentration sensor from DFRobot. This sen
 ![效果图](resources/images/SEN0377.jpg)
 
 
-## Product Link（https://www.dfrobot.com/product-2417.html）
+## Product Link(https://www.dfrobot.com/product-2417.html)
 
     SKU：SEN0377
 
@@ -23,8 +23,8 @@ This is a 3.3/5V compatible MEMS gas concentration sensor from DFRobot. This sen
 
 Detection of Physical Quantities: gas concentration of CO，C2H5OH(Alcohol), H2, NO2, NH3, CH4<br>
 Operating Voltage: 3.3～5.5V DC<br>
-Power Dissipation: 0.45W（5V）<br>
-Output Signal: I2C（0~3V）<br>
+Power Dissipation: 0.45W(5V)<br>
+Output Signal: I2C(0~3V)<br>
 Measuring Range:<br>
 1 – 1000ppm(Carbon monoxide CO )<br>
 0.05 – 10ppm(Nitrogen dioxide NO2 )<br>
@@ -33,9 +33,9 @@ Measuring Range:<br>
 1 – 500ppm(Ammonia NH3 )<br>
 >1000ppm(Methane CH4 )<br>
 Working Temperature: -30～85℃<br>
-Working Humidity: 5～95%RH （No condensation）<br>
+Working Humidity: 5～95%RH (No condensation)<br>
 Storage Temperature: -40~85℃<br>
-Lifespan: >2 years （in the air）<br>
+Lifespan: >2 years (in the air)<br>
 Circuit Board Size: 27mm*37mm<br>
 Mounting Hole Size: inner diameter 3.1mm/outer diameter 6mm<br>
 
@@ -47,7 +47,7 @@ There are two methods for using this library:<br>
 ## Methods
 
 ```C++
- /**
+  /**
    * @fn warmUpTime
    * @brief Waiting time for warm-up
    * @param minute Units of minutes
