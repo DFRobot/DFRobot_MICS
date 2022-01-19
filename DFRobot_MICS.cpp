@@ -1,18 +1,17 @@
 /*!
- * @file DFRobot_MicsSensor.cpp
- * @brief Define the infrastructure of the DFRobot_MICS class and the implementation of the underlying methods
- * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
- * @author      [ZhixinLiu](zhixin.liu@dfrobot.com)
- * @version     V1.1
- * @date        2020-04-20
- * @url         https://github.com/DFRobot/DFRobot_MICS
+ * @file DFRobot_MICS.cpp
+ * @brief Define the basic structure of class DFRobot_MicsSensor
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author [ZhixinLiu](zhixin.liu@dfrobot.com)
+ * @version V1.1
+ * @date 2020-4-20
+ * @url https://github.com/DFRobot/DFRobot_MICS
  */
 #include "DFRobot_MICS.h"
 
 DFRobot_MICS::DFRobot_MICS(){}
 DFRobot_MICS::~DFRobot_MICS(){}
-
 
 bool DFRobot_MICS::warmUpTime(uint8_t minute)
 {
@@ -65,7 +64,6 @@ int16_t DFRobot_MICS::getADCData(uint8_t mode)
     return RS_R0_RED_data;
   }
 }
-
 
 void DFRobot_MICS::sleepMode(void)
 {

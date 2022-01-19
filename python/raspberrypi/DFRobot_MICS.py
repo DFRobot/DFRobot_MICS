@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*
-""" 
+'''!
   @file DFRobot_MICS.py
-  @note DFRobot_MICS Class infrastructure, implementation of underlying methods
-  @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  @licence     The MIT License (MIT)
-  @author      [ZhixinLiu](zhixin.liu@dfrobot.com)
-  version  V1.2
-  date  2021-06-18
-  @get from https://www.dfrobot.com
-  @url https://github.com/DFRobot/DFRobot_MicsSensor
-"""
+  @brief DFRobot_MICS Class infrastructure, implementation of underlying methods
+  @copyright Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+  @license The MIT License (MIT)
+  @author [ZhixinLiu](zhixin.liu@dfrobot.com)
+  @version V1.2
+  @date 2020-09-09
+  @url https://github.com/DFRobot/DFRobot_MICS
+'''
 import serial
 import time
 import smbus
 
-MICS_ADDRESS_0                 = 0x75          # i2c slave Address
-MICS_ADDRESS_1                 = 0x76
-MICS_ADDRESS_2                 = 0x77
-MICS_ADDRESS_3                 = 0x78
-
+MICS_ADDRESS_0            = 0x75
+MICS_ADDRESS_1            = 0x76
+MICS_ADDRESS_2            = 0x77
+MICS_ADDRESS_3            = 0x78
 
 ERROR                     = -1.0
 OX_MODE                   = 0x00
@@ -35,59 +33,71 @@ POWER_REGISTER_MODE       = 0x0a
 SLEEP_MODE                = 0x00
 WAKEUP_MODE               = 0x01
 
-CO                        = 0x01          # Carbon Monoxide
-CH4                       = 0x02          # Methane
-C2H5OH                    = 0x03          # Ethanol
-C3H8                      = 0x04          # Propane
-C4H10                     = 0x05          # Iso Butane
-H2                        = 0x06          # Hydrogen
-H2S                       = 0x07          # Hydrothion
-NH3                       = 0x08          # Ammonia
-NO                        = 0x09          # Nitric Oxide
-NO2                       = 0x0a          # Nitrogen Dioxide
+## Carbon Monoxide
+CO                        = 0x01
+## Methane
+CH4                       = 0x02
+## Ethanol
+C2H5OH                    = 0x03
+## Propane
+C3H8                      = 0x04
+## Iso Butane
+C4H10                     = 0x05
+## Hydrogen
+H2                        = 0x06
+## Hydrothion
+H2S                       = 0x07
+## Ammonia
+NH3                       = 0x08
+## Nitric Oxide
+NO                        = 0x09
+## Nitrogen Dioxide
+NO2                       = 0x0a
   
 class DFRobot_MICS(object):
-  __m_flag   = 0                # mode flag
-  __count    = 0                # acquisition count    
-  __txbuf        = [0]          # i2c send buffer
-  __alcoholdata  = [0]*101      # alcohol data
+  ## mode flag
+  __m_flag   = 0
+  ## acquisition count
+  __count    = 0
+  ## i2c send buffer
+  __txbuf        = [0]
+  ## alcohol data
+  __alcoholdata  = [0]*101
   __uart_i2c     =  0
   __r0_ox        =  1.0
   __r0_red       =  1.0
   def __init__(self, bus):
     self.i2cbus = smbus.SMBus(bus)
 
-  '''
-    @brief sleep sensor
-  '''
   def sleep_mode(self):
+    '''!
+      @brief sleep sensor
+    '''
     rslt = [0]*1
     rslt[0] = SLEEP_MODE
     self.write_reg(POWER_REGISTER_MODE, rslt)
 
-  '''
-    @brief wake up sensor
-  '''
   def wakeup_mode(self):
+    '''!
+      @brief wake up sensor
+    '''
     rslt = [0]*1
     rslt[0] = WAKEUP_MODE
     self.write_reg(POWER_REGISTER_MODE, rslt)
 
-  '''
-    @breif get power mode
-    @return mode
-              SLEEP_MODE
-              WAKEUP_MODE
-  '''
   def get_power_mode(self):
+    '''!
+      @breif get power mode
+      @return mode SLEEP_MODE or WAKEUP_MODE
+    '''
     rslt = self.read_reg(POWER_REGISTER_MODE, 1)
     return rslt[0]
 
-  '''
-    @brief Waiting time for warm-up
-    @param minute Units of minutes
-  '''
   def warm_up_time(self, minute):
+    '''!
+      @brief Waiting time for warm-up
+      @param minute Units of minutes
+    '''
     second = minute*60
     print("Start calibration Sensor!")
     while (second):
@@ -104,12 +114,12 @@ class DFRobot_MICS(object):
     self.__r0_red = (int)(self.__r0_red / 10)
     print("calibration success!")
 
-  '''
-    @brief get ADC data
-    @param mode OX_MODE or RED_MODE
-    @return adc data
-  '''
   def get_adc_data(self, mode):
+    '''!
+      @brief get ADC data
+      @param mode OX_MODE or RED_MODE
+      @return adc data
+    '''
     rslt = self.get_mics_data()
     if mode ==  OX_MODE:
       return rslt[0]
@@ -117,13 +127,19 @@ class DFRobot_MICS(object):
       return rslt[1]
     else:
       return ERROR
-
-  '''
-    @brief get the gas data, units of PPM
-    @param gas_type is gas type
-    @return gas concentration, (units PPM)
-  '''
+  
   def get_gas_ppm(self, gas_type):
+    '''!
+      @brief get the gas data, units of PPM
+      @param gas_type is gas type
+      @param CO        0x01  (Carbon Monoxide)
+      @param CH4       0x02  (Methane)
+      @param C2H5OH    0x03  (Ethanol)
+      @param H2        0x06  (Hydrogen)
+      @param NH3       0x08  (Ammonia)
+      @param NO2       0x0A  (Nitrogen Dioxide)
+      @return gas concentration, (units PPM)
+    '''
     rslt = self.get_mics_data()
     rs_r0_red_data = rslt[1]
     rs_r0_red_data = float(rs_r0_red_data) / float(self.__r0_red)
@@ -144,18 +160,28 @@ class DFRobot_MICS(object):
     else:
       return ERROR
 
-  '''
-    @brief Detect the presence of gas
-    @param gas_type is gas type
-    @return Whether gas is present
-  '''
   def get_gas_exist(self, gas_type):
+    '''!
+      @brief Detect the presence of gas
+      @param gas_type is gas type
+      @param CO        0x01  (Carbon Monoxide)
+      @param CH4       0x02  (Methane)
+      @param C2H5OH    0x03  (Ethanol)
+      @param C3H8      0x04  (Propane)
+      @param C4H10     0x05  (Iso Butane)
+      @param H2        0x06  (Hydrogen)
+      @param H2S       0x07  (Hydrothion)
+      @param NH3       0x08  (Ammonia)
+      @param NO        0x09  (Nitric Oxide)
+      @param NO2       0x0A  (Nitrogen Dioxide)
+      @return Whether gas is present
+    '''
     rslt = self.get_mics_data()
     rs_r0_red_data = rslt[1]
     rs_r0_red_data = float(rs_r0_red_data) / float(self.__r0_red)
     rs_ro_ox_data  = rslt[0]
     rs_ro_ox_data  = float(rs_ro_ox_data) / float(self.__r0_ox)
-    if gas_type ==  CO:
+    if gas_type == CO:
       return self.existCarbonMonoxide(rs_r0_red_data)
     elif gas_type == CH4:
       return self.existMethane(rs_r0_red_data)
@@ -178,11 +204,11 @@ class DFRobot_MICS(object):
     else:
       return ERROR
 
-  '''
-    @brief get sensor adc data
-    @return ox register red register power register
-  '''
   def get_mics_data(self):
+    '''!
+      @brief get sensor adc data
+      @return ox register red register power register
+    '''
     rslt = self.read_reg(OX_REGISTER_HIGH, 6)
     oxdata = rslt[0]*256 + rslt[1]
     reddata = rslt[2]*256 + rslt[3]
@@ -319,19 +345,11 @@ class DFRobot_MICS(object):
     else:
       return 1
 
-'''
-  @brief An example of an i2c interface module
-'''
 class DFRobot_MICS_I2C(DFRobot_MICS): 
   def __init__(self, bus, addr):
     self.__addr = addr;
     super(DFRobot_MICS_I2C, self).__init__(bus)
 
-  '''
-    @brief writes data to a register
-    @param reg register address
-    @param value written data
-  '''
   def write_reg(self, reg, data):
     while 1:
       try:
@@ -340,11 +358,7 @@ class DFRobot_MICS_I2C(DFRobot_MICS):
       except:
         print("please check connect!")
         time.sleep(1)
-  '''
-    @brief read the data from the register
-    @param reg register address
-    @param value read data
-  '''
+
   def read_reg(self, reg, len):
     while 1:
       try:

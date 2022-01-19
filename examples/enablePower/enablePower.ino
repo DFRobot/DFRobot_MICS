@@ -1,27 +1,24 @@
- /*!
-  * @file  enablePower.ino
-  * @brief Enable the power, and the information is printed on the serial port.
-  * @n When using IIC device, select I2C address, set the dialing switch A0, A1 (Address_0 is [0 0]), (Address_1 is [1 0]), (Address_2 is [0 1]), (Address_3 is [1 1]).
-  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
-  * @licence     The MIT License (MIT)
-  * @author      ZhixinLiu(zhixin.liu@dfrobot.com)
-  * @version     V1.2
-  * @date        2021-06-18
-  * @get         from https://www.dfrobot.com
-  * @url         https://github.com/dfrobot/DFRobot_MICS
-  */
+/*!
+ * @file enablePower.ino
+ * @brief Enable the power, and the information is printed on the serial port.
+ * @n the dialing switch A0, A1 (MICS_ADDRESS_0 is [0 0]), (MICS_ADDRESS_1 is [1 0])
+ * @n (MICS_ADDRESS_2 is [0 1]), (MICS_ADDRESS_3 is [1 1]).
+ * @copyright Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author ZhixinLiu(zhixin.liu@dfrobot.com)
+ * @version V1.2
+ * @date 2021-06-18
+ * @url https://github.com/DFRobot/DFRobot_MICS
+ */
 #include "DFRobot_MICS.h"
 
-#define CALIBRATION_TIME   3                      // Default calibration time is three minutes
-
-// When using I2C communication, use the following program to construct an object by DFRobot_MICS_I2C
-/**!
-    iic slave Address, The default is MICS_ADDRESS_0
-       MICS_ADDRESS_0               0x75             // i2c device address
-       MICS_ADDRESS_1               0x76
-       MICS_ADDRESS_2               0x77
-       MICS_ADDRESS_3               0x78
-*/
+/**
+ * select i2c device address 
+ * MICS_ADDRESS_0               0x75
+ * MICS_ADDRESS_1               0x76
+ * MICS_ADDRESS_2               0x77
+ * MICS_ADDRESS_3               0x78
+ */
 #define MICS_I2C_ADDRESS MICS_ADDRESS_0
 DFRobot_MICS_I2C mics(&Wire, MICS_I2C_ADDRESS);
 
@@ -37,11 +34,11 @@ void setup()
 
 void loop() 
 {
-  /**!
-    Gets the power mode of the sensor
-    The sensor is in sleep mode when power is on,so it needs to wake up the sensor. 
-    The data obtained in sleep mode is wrong
-  */
+  /**
+   * Gets the power mode of the sensor
+   * The sensor is in sleep mode when power is on,so it needs to wake up the sensor. 
+   * The data obtained in sleep mode is wrong
+   */
   if(SLEEP_MODE == mics.getPowerState()){
     mics.wakeUpMode();
     Serial.println("sleep mode,   wake up sensor success!");

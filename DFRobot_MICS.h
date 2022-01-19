@@ -1,19 +1,19 @@
 /*!
- * @file DFRobot_MICS.cpp
+ * @file DFRobot_MICS.h
  * @brief Define the basic structure of class DFRobot_MicsSensor
- * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @licence     The MIT License (MIT)
- * @author      [ZhixinLiu](zhixin.liu@dfrobot.com)
- * @version     V1.1
- * @date        2020-04-20
- * @url         https://github.com/DFRobot/DFRobot_MICS
+ * @copyright	Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license The MIT License (MIT)
+ * @author [ZhixinLiu](zhixin.liu@dfrobot.com)
+ * @version V1.1
+ * @date 2020-4-20
+ * @url https://github.com/DFRobot/DFRobot_MICS
  */
 #ifndef __DFROBOT_MICS_H__
 #define __DFROBOT_MICS_H__
 #include <Arduino.h>
 #include <Wire.h>
 
-#define ENABLE_DBG                // Open this macro to see the program running in detail
+#define ENABLE_DBG                ///< Open this macro to see the program running in detail
 
 #ifdef ENABLE_DBG
   #define DBG(...) {Serial.print("[");Serial.print(__FUNCTION__); Serial.print("(): "); Serial.print(__LINE__); Serial.print(" ] "); Serial.println(__VA_ARGS__);}
@@ -24,8 +24,7 @@
 #define           MICS_ADDRESS_0            0x75
 #define           MICS_ADDRESS_1            0x76
 #define           MICS_ADDRESS_2            0x77
-#define           MICS_ADDRESS_3            0x78           // iic slave Address
-
+#define           MICS_ADDRESS_3            0x78
 #define           OX_REGISTER_HIGH          0x04
 #define           OX_REGISTER_LOW           0x05
 #define           RED_REGISTER_HIGH         0x06
@@ -33,98 +32,104 @@
 #define           POWER_REGISTER_HIGH       0x08
 #define           POWER_REGISTER_LOW        0x09
 #define           POWER_MODE_REGISTER       0x0a
-
 #define           SLEEP_MODE                0x00
 #define           WAKE_UP_MODE              0x01
-
 #define           OX_MODE                   0x00
 #define           RED_MODE                  0x01
-
 #define           ERROR                     -1
 #define           EXIST                     0x00
 #define           NO_EXIST                  0x02
 
-#define           CO                        0x01          // Carbon Monoxide
-#define           CH4                       0x02          // Methane
-#define           C2H5OH                    0x03          // Ethanol
-#define           C3H8                      0x04          // Propane
-#define           C4H10                     0x05          // Iso Butane
-#define           H2                        0x06          // Hydrogen
-#define           H2S                       0x07          // Hydrothion
-#define           NH3                       0x08          // Ammonia
-#define           NO                        0x09          // Nitric Oxide
-#define           NO2                       0x0A          // Nitrogen Dioxide
+#define           CO                        0x01          ///< Carbon Monoxide
+#define           CH4                       0x02          ///< Methane
+#define           C2H5OH                    0x03          ///< Ethanol
+#define           C3H8                      0x04          ///< Propane
+#define           C4H10                     0x05          ///< Iso Butane
+#define           H2                        0x06          ///< Hydrogen
+#define           H2S                       0x07          ///< Hydrothion
+#define           NH3                       0x08          ///< Ammonia
+#define           NO                        0x09          ///< Nitric Oxide
+#define           NO2                       0x0A          ///< Nitrogen Dioxide
 
 
 class DFRobot_MICS{
 public:
   DFRobot_MICS();
   ~DFRobot_MICS();
-  /*!
-   *  @brief Waiting time for warm-up
-   *  @param minute Units of minutes
-   *  @return true  is warm-up success
-   *          false is wait warm-up
+
+  /**
+   * @fn warmUpTime
+   * @brief Waiting time for warm-up
+   * @param minute Units of minutes
+   * @return bool type
+   * @retval true  is warm-up success
+   * @retval false is wait warm-up
    */
   bool warmUpTime(uint8_t minute);
 
-  /*!
-   *  @brief Read sensor ADC data
-   *  @param mode:
-   *           OX_MODE
-   *           RED_MODE
-   *  @return adcValue (0-1024)
+  /**
+   * @fn getADCData
+   * @brief Read sensor ADC data
+   * @param mode oxmode redmode
+   * @n     OX_MODE
+   * @n     RED_MODE
+   * @return adcValue (0-1024)
    */
   int16_t getADCData(uint8_t mode);
 
-  /**!
-   *  @brief Read the concentration of the gas
-   *  @param type:
-   *    Methane          (CH4)    (1000 - 25000)PPM
-   *    Ethanol          (C2H5OH) (10   - 500)PPM
-   *    Hydrogen         (H2)     (1    - 1000)PPM
-   *    Ammonia          (NH3)    (1    - 500)PPM
-   *    Carbon Monoxide  (CO)     (1    - 1000)PPM
-   *    Nitrogen Dioxide (NO2)    (0.1  - 10)PPM
-   *  @return concentration Units of PPM
+  /**
+   * @fn getGasData
+   * @brief Read the concentration of the gas
+   * @param type gas type
+   * @n   Methane          (CH4)    (1000 - 25000)PPM
+   * @n   Ethanol          (C2H5OH) (10   - 500)PPM
+   * @n   Hydrogen         (H2)     (1    - 1000)PPM
+   * @n   Ammonia          (NH3)    (1    - 500)PPM
+   * @n   Carbon Monoxide  (CO)     (1    - 1000)PPM
+   * @n   Nitrogen Dioxide (NO2)    (0.1  - 10)PPM
+   * @return concentration Units of PPM
    */
   float getGasData(uint8_t type);
 
-  /**!
-   *  @brief Read whether the gas is present
-   *  @param gas:
-   *    CO       = 0x01  (Carbon Monoxide)
-   *    CH4      = 0x02  (Methane)
-   *    C2H5OH   = 0x03  (Ethanol)
-   *    C3H8     = 0x04  (Propane)
-   *    C4H10    = 0x05  (Iso Butane)
-   *    H2       = 0x06  (Hydrogen)
-   *    H2S      = 0x07  (Hydrothion)
-   *    NH3      = 0x08  (Ammonia)
-   *    NO       = 0x09  (Nitric Oxide)
-   *    NO2      = 0x0A  (Nitrogen Dioxide)
-   *  @return state
-   *            NO_EXIST
-   *            EXIST
+   /**
+   * @fn getGasExist
+   * @brief Read whether the gas is present
+   * @param gas type
+   * @n   CO       = 0x01  (Carbon Monoxide)
+   * @n   CH4      = 0x02  (Methane)
+   * @n   C2H5OH   = 0x03  (Ethanol)
+   * @n   C3H8     = 0x04  (Propane)
+   * @n   C4H10    = 0x05  (Iso Butane)
+   * @n   H2       = 0x06  (Hydrogen)
+   * @n   H2S      = 0x07  (Hydrothion)
+   * @n   NH3      = 0x08  (Ammonia)
+   * @n   NO       = 0x09  (Nitric Oxide)
+   * @n   NO2      = 0x0A  (Nitrogen Dioxide)
+   * @return state
+   * @retval NO_EXIST
+   * @retval EXIST
    */
   int8_t getGasExist(uint8_t gas);
 
-  /**!
-   *  @brief Sleep sensor
-   */
+  /**
+   * @fn sleepMode
+   * @brief Sleep sensor
+   */ 
   void sleepMode(void);
 
-  /**!
-   *  @brief wakeup sensor
-   */
+  /**
+   * @fn wakeUpMode
+   * @brief wakeup sensor
+   */ 
   void wakeUpMode(void);
 
-  /**!
-   *  @brief Gets the power mode of the sensor
-   *  @return mode
-   *            SLEEP_MODE
-   *            WAKE_UP_MODE
-   */
+  /**
+   * @fn getPowerState
+   * @brief Gets the power mode of the sensor
+   * @return state
+   * @retval SLEEP_MODE
+   * @retval WAKE_UP_MODE
+   */ 
   uint8_t getPowerState(void);
 
 private:
