@@ -8,7 +8,7 @@ This is a 3.3/5V compatible MEMS gas concentration sensor from DFRobot. This sen
 
 ## Product Link(https://www.dfrobot.com/product-2417.html)
 
-    SKU：SEN0377
+    SKU:SEN0377
 
 ## Table of Contents
 
@@ -21,23 +21,23 @@ This is a 3.3/5V compatible MEMS gas concentration sensor from DFRobot. This sen
 
 ## Summary
 
-Detection of Physical Quantities: gas concentration of CO，C2H5OH(Alcohol), H2, NO2, NH3, CH4<br>
-Operating Voltage: 3.3～5.5V DC<br>
-Power Dissipation: 0.45W(5V)<br>
-Output Signal: I2C(0~3V)<br>
-Measuring Range:<br>
+- Detection of Physical Quantities: gas concentration of CO,C2H5OH(Alcohol), H2, NO2, NH3, CH4<br>
+- Operating Voltage: 3.3～5.5V DC<br>
+- Power Dissipation: 0.45W(5V)<br>
+- Output Signal: I2C(0~3V)<br>
+- Measuring Range:<br>
 1 – 1000ppm(Carbon monoxide CO )<br>
 0.05 – 10ppm(Nitrogen dioxide NO2 )<br>
 10 – 500ppm( Ethanol C2H5OH )<br>
 1 – 1000ppm(Hydrogen H2)<br>
 1 – 500ppm(Ammonia NH3 )<br>
->1000ppm(Methane CH4 )<br>
-Working Temperature: -30～85℃<br>
-Working Humidity: 5～95%RH (No condensation)<br>
-Storage Temperature: -40~85℃<br>
-Lifespan: >2 years (in the air)<br>
-Circuit Board Size: 27mm*37mm<br>
-Mounting Hole Size: inner diameter 3.1mm/outer diameter 6mm<br>
+1000 - ∞ ppm(Methane CH4 )<br>
+- Working Temperature: -30～85℃<br>
+- Working Humidity: 5～95%RH (No condensation)<br>
+- Storage Temperature: -40~85℃<br>
+- Lifespan: >2 years (in the air)<br>
+- Circuit Board Size: 27mm*37mm<br>
+- Mounting Hole Size: inner diameter 3.1mm/outer diameter 6mm<br>
 
 ## Installation
 There are two methods for using this library:<br>
