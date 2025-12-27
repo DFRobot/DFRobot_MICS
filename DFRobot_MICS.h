@@ -36,7 +36,7 @@
 #define           WAKE_UP_MODE              0x01
 #define           OX_MODE                   0x00
 #define           RED_MODE                  0x01
-#define           MISCS_ERROR                     -1
+#define           MICS_ERROR                     -1
 #define           EXIST                     0x00
 #define           NO_EXIST                  0x02
 

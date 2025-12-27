@@ -32,7 +32,7 @@ bool DFRobot_MICS::warmUpTime(uint8_t minute)
   if(excessTime < delayTime){
     return false;
   }
-  if(getSensorData(oxData, redData, powerData) == MISCS_ERROR){
+  if(getSensorData(oxData, redData, powerData) == MICS_ERROR){
     return false;
   }
   __r0_ox  = powerData[0] - oxData[0];
@@ -167,7 +167,7 @@ int8_t DFRobot_MICS::getGasExist(uint8_t gas)
       }
       break;
     default:
-      return MISCS_ERROR;
+      return MICS_ERROR;
       break;
   }
 }
@@ -200,7 +200,7 @@ float DFRobot_MICS::getGasData(uint8_t type)
       return getNitrogenDioxide(RS_R0_OX_data);
       break;
     default:
-      return MISCS_ERROR;
+      return MICS_ERROR;
       break;
   }
 }
@@ -414,7 +414,7 @@ int16_t DFRobot_MICS_I2C::readData(uint8_t reg, uint8_t *data, uint8_t len)
   _pWire->write(reg);
   if(_pWire->endTransmission() != 0)
   {
-    return MISCS_ERROR;
+    return MICS_ERROR;
   }
   _pWire->requestFrom((uint8_t)this->_I2C_addr, (uint8_t)len);
   while (_pWire->available())
